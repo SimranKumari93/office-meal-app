@@ -1,0 +1,110 @@
+/* Root variables for light/dark */
+:root{
+  --bg: #f5f6fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --text: #111827;
+  --accent: #2b6ef6;
+  --pill-bg: #f1f5f9;
+  --shadow: 0 10px 30px rgba(16,24,40,0.08);
+}
+
+/* Dark theme */
+:root[data-theme="dark"]{
+  --bg: #0b1220;
+  --card: #0f1724;
+  --muted: #9aa4b2;
+  --text: #e6eef8;
+  --accent: #4aa3ff;
+  --pill-bg: #0b1228;
+  --shadow: 0 10px 30px rgba(2,6,23,0.7);
+}
+
+*{box-sizing:border-box}
+body,html,#root{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
+body{background:var(--bg);color:var(--text);}
+
+/* App layout */
+.app-root{min-height:100vh;display:flex;flex-direction:column}
+.main-area{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px 60px}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:18px;
+}
+
+/* Center column for mobile */
+.page-wrapper{width:100%;max-width:420px}
+
+/* ---------- NAVBAR ---------- */
+.navbar{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:transparent;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c5cff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+.brand h1{font-size:18px;margin:0}
+
+/* small footer nav for mobile in UI mockup */
+.mobile-nav{display:flex;gap:18px;justify-content:center;padding:12px;background:transparent;position:fixed;left:0;right:0;bottom:10px;max-width:420px;margin:auto}
+
+/* ---------- LOGIN / SIGNUP ---------- */
+.auth-card{border-radius:28px;padding:28px 22px}
+.auth-title{font-size:26px;font-weight:700;margin:4px 0 18px}
+.input{width:100%;padding:12px;border-radius:10px;border:1px solid #e6e9ef;background:transparent;margin-bottom:12px;font-size:15px}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 6px 18px rgba(43,110,246,0.12)}
+.btn{display:block;width:100%;background:var(--accent);color:#fff;border:none;padding:12px;border-radius:12px;font-weight:600;font-size:16px;cursor:pointer}
+.switch-text{text-align:center;margin-top:14px;color:var(--muted)}
+.switch-text span{color:var(--accent);cursor:pointer;font-weight:600}
+
+/* ---------- DASHBOARD (employee) ---------- */
+.dashboard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.welcome{font-size:20px;font-weight:700}
+.date-small{color:var(--muted);font-size:13px}
+
+/* Meal cards */
+.meal-list{display:flex;flex-direction:column;gap:14px}
+.meal-row{display:flex;justify-content:space-between;align-items:center;padding:14px;border-radius:12px;background:var(--pill-bg)}
+.meal-info{display:flex;flex-direction:column}
+.meal-title{font-weight:600}
+.meal-controls{display:flex;gap:8px;align-items:center}
+
+/* preference pills */
+.pills{display:flex;gap:8px;margin-top:8px}
+.pill{padding:8px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent;font-weight:600;cursor:pointer}
+.pill.selected{background:var(--accent);color:white;border:0}
+
+/* toggle */
+.switch{position:relative;width:44px;height:26px;border-radius:30px;background:#e6e6e6;cursor:pointer}
+.switch .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:white;box-shadow:0 2px 6px rgba(0,0,0,0.12);transition:all .22s}
+.switch.on{background:linear-gradient(90deg,var(--accent),#7c5cff)}
+.switch.on .knob{transform:translateX(18px)}
+
+/* add guest button */
+.guest-btn{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:var(--card);cursor:pointer;border:1px dashed rgba(0,0,0,0.06)}
+
+/* ---------- ADMIN ---------- */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.stat-card{padding:18px;border-radius:12px;background:var(--card);text-align:center;box-shadow:var(--shadow)}
+.stat-number{font-size:22px;font-weight:700}
+
+/* ---------- GUEST FORM ---------- */
+.guest-form{display:flex;flex-direction:column;gap:12px}
+/* ---------- small screens ---------- */
+@media (max-width:600px){
+  .main-area{padding:10px}
+  .page-wrapper{max-width:420px;padding-bottom:70px}
+  .card{border-radius:22px}
+  .auth-card{padding:20px}
+  .mobile-nav{display:flex}
+}
+
+/* ---------- larger screens (desktop) ---------- */
+@media (min-width:900px){
+  .main-area{align-items:flex-start}
+  .page-wrapper{max-width:900px}
+  .card{padding:24px}
+  .auth-card{width:420px}
+}
