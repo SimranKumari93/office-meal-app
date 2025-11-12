@@ -1,41 +1,68 @@
 import React, { useState } from "react";
 
-/* Login handles both sign in and sign up (UI). Replace the submit handlers with API calls. */
 export default function Login({ onLogin, onRoute }) {
-  const [mode, setMode] = useState("signin"); // signin | signup
-  const [form, setForm] = useState({ name: "", employee_id: "", password: "" });
+  const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    employeeId: "",
+    pin: "",
+  });
 
-  function handleChange(e) {
-    setForm({...form, [e.target.name]: e.target.value});
-  }
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    if (name === "pin") {
+      value = value.replace(/\D/g, "").slice(0, 4); // Only digits, max 4
+    }
+    setFormData({ ...formData, [name]: value });
+  };
 
-  function submit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Dummy auth: on signup return employee with role employee. Replace with real API.
-    const user = {
-      employee_id: form.employee_id || "E001",
-      name: form.name || "Riya Sharma",
-      role: form.employee_id === "admin" ? "admin" : "employee",
-    };
-    if (onLogin) onLogin(user);
-  }
+    onLogin(formData);
+  };
 
   return (
-    <div className="page-wrapper">
-      <div className="card auth-card">
-        <h2 className="auth-title">{mode==="signin" ? "Sign In" : "Sign Up"}</h2>
-        <form onSubmit={submit}>
-          {mode === "signup" && (
-            <input name="name" className="input" placeholder="Full Name" value={form.name} onChange={handleChange} required />
+    <div className="login-container">
+      <div className="login-box">
+        <h2>{isSignup ? "Sign Up" : "Login"}</h2>
+        <form onSubmit={handleSubmit}>
+          {isSignup && (
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
           )}
-          <input name="employee_id" className="input" placeholder="Employee ID" value={form.employee_id} onChange={handleChange} required />
-          {mode === "signup" && <input name="email" className="input" placeholder="Email (optional)" />}
-          <input name="password" type="password" className="input" placeholder="Password" value={form.password} onChange={handleChange} required />
-          <button className="btn" type="submit">{mode==="signin" ? "Sign In" : "Create Account"}</button>
+          <input
+            type="text"
+            name="employeeId"
+            placeholder="Employee ID"
+            value={formData.employeeId}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="pin"
+            placeholder="4-digit PIN"
+            value={formData.pin}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">
+            {isSignup ? "Create Account" : "Login"}
+          </button>
         </form>
-        <p className="switch-text">
-          {mode==="signin" ? "Don’t have an account?" : "Already have an account?"}{" "}
-          <span onClick={()=>setMode(mode==="signin" ? "signup" : "signin")}>{mode==="signin" ? "Sign up" : "Sign in"}</span>
+        <div style={{display:'flex',gap:12,justifyContent:'center',marginTop:8}}>
+          <p className="forgot-pin" style={{cursor:'pointer',color:'#007bff',margin:0}} onClick={() => onRoute && onRoute('forgot')}>Forgot PIN?</p>
+        </div>
+        <p onClick={() => setIsSignup(!isSignup)} className="toggle-text">
+          {isSignup
+            ? "Already have an account? Login"
+            : "New here? Sign Up"}
         </p>
       </div>
     </div>

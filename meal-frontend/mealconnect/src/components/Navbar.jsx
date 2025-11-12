@@ -22,11 +22,31 @@ export default function Navbar({ user, onRoute, onLogout, theme, setTheme }) {
 
         {user ? (
           <>
-            <div style={{fontSize:14,color:"var(--muted)"}}>{user.name}</div>
-            <button onClick={onLogout} style={{padding:"8px 12px",borderRadius:8,cursor:"pointer"}}>Logout</button>
+            <div style={{fontSize:14,color:"var(--muted)",marginRight:8}} className="nav-username">{user.name}</div>
+            <div
+              title="Logout"
+              role="button"
+              tabIndex={0}
+              aria-label="Logout"
+              onClick={onLogout}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onLogout(); }}
+              className="nav-avatar"
+            >
+              <img src="/images/user.svg" alt="user avatar" width={36} height={36} />
+            </div>
           </>
         ) : (
-          <button onClick={() => onRoute("login")} style={{padding:"8px 12px",borderRadius:8,cursor:"pointer"}}>Login</button>
+          <div
+            title="Login"
+            role="button"
+            tabIndex={0}
+            aria-label="Login"
+            onClick={() => onRoute && onRoute('login')}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onRoute && onRoute('login'); }}
+            className="nav-avatar"
+          >
+            <img src="/images/user.svg" alt="login avatar" width={36} height={36} />
+          </div>
         )}
       </div>
     </header>

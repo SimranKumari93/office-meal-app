@@ -17,15 +17,40 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-from meals.views import EmployeeViewSet, MealPreferenceViewSet, GuestEntryViewSet
+from rest_framework.routers import DefaultRouter
+from meals.views import (
+    EmployeeViewSet,
+    MealPreferenceViewSet,
+    GuestEntryViewSet,
+    AttendanceViewSet,
+    login_view,
+    signup_view,
+    daily_summary,
+    weekly_summary,
+    me_view,
+    forgot_pin_view,
+    change_pin_view,
+)
+from meals.views import MenuViewSet
+from meals.views import DailyMenuViewSet
 
-router = routers.DefaultRouter()
+router = DefaultRouter()
 router.register(r'employees', EmployeeViewSet)
 router.register(r'meal-preferences', MealPreferenceViewSet)
 router.register(r'guest-entries', GuestEntryViewSet)
+router.register(r'attendances', AttendanceViewSet)
+router.register(r'menu', MenuViewSet)
+router.register(r'daily-menu', DailyMenuViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/summary/daily/', daily_summary, name='daily_summary'),
+    path('api/summary/weekly/', weekly_summary, name='weekly_summary'),
+    path('api/me/', me_view, name='me_view'),
+    path('forgot-pin/', forgot_pin_view, name='forgot_pin'),
+    path('api/change-pin/', change_pin_view, name='change_pin'),
+    path('login/', login_view, name='login_view'),
+    path('signup/', signup_view, name='signup_view'),
 ]
+
