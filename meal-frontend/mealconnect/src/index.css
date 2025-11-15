@@ -10,7 +10,7 @@
   --pill-bg: #f1f5f9;
 
   /* spacing & radii */
-  --radius-sm: 8px;
+  --radius-sm: 8px;   
   --radius-md: 12px;
   --radius-lg: 18px;
 
@@ -193,19 +193,6 @@ body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-
 .menu-row { padding: 12px 8px; border-bottom: 1px solid rgba(0,0,0,0.04); display:flex; gap:12px; align-items:center; }
 .menu-items { color: var(--muted); font-size:14px; }
 
-/* ---------NEW CHANGES ENDED----   */ 
-
-/* ---------- GUEST FORM ---------- */
-.guest-form{display:flex;flex-direction:column;gap:12px}
-/* ---------- small screens ---------- */
-@media (max-width:600px){
-  .main-area{padding:10px}
-  .page-wrapper{max-width:420px;padding-bottom:70px}
-  .card{border-radius:22px}
-  .auth-card{padding:20px}
-  .mobile-nav{display:flex}
-}
-
 /* ---------- larger screens (desktop) ---------- */
 @media (min-width:900px){
   .main-area{align-items:flex-start}
@@ -213,3 +200,10 @@ body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-
   .card{padding:24px}
   .auth-card{width:420px}
 }
+
+
+
+
+
+/****  End of index.css  ****/
+

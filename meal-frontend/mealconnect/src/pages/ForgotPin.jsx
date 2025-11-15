@@ -36,7 +36,7 @@ export default function ForgotPin({ onBack }) {
     <div className="page-wrapper" style={{display:'flex',alignItems:'center',justifyContent:'center',minHeight:'70vh',padding:16}}>
       <div className="card" style={{maxWidth:480,width:'100%'}}>
         <h3 style={{marginTop:0,textAlign:'center'}}>Forgot PIN</h3>
-        <p>Enter your Employee ID and full name to reset your 4-digit PIN. (Dev flow)</p>
+        {/* <p>Enter your Employee ID and full name to reset your 4-digit PIN.</p> */}
         <form onSubmit={submit}>
           <input className="input" placeholder="Employee ID" value={employeeId} onChange={e=>setEmployeeId(e.target.value)} required />
           <input className="input" placeholder="Full Name" value={name} onChange={e=>setName(e.target.value)} required />

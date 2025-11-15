@@ -42,13 +42,38 @@ class Employee(AbstractBaseUser, PermissionsMixin):
 
     objects = EmployeeManager()
 
-    def clean(self):
-        # 🔧 validate PIN even if created from admin
-        if self.password and (not self.password.isdigit() or len(self.password) != 4):
-            raise ValidationError("Password must be exactly 4 digits.")
+    # Remove the clean() method entirely!
 
     def __str__(self):
         return f"{self.name} ({self.employee_id})"
+
+### ---------- Previous Employee Model with clean() method (commented out) ---------- #
+
+# class Employee(AbstractBaseUser, PermissionsMixin):
+#     employee_id = models.CharField(max_length=20, unique=True)
+#     name = models.CharField(max_length=100)
+#     department = models.CharField(max_length=100, blank=True, null=True)
+#     role = models.CharField(
+#         max_length=20,
+#         choices=[('employee', 'Employee'), ('admin', 'Admin')],
+#         default='employee'
+#     )
+
+#     is_active = models.BooleanField(default=True)
+#     is_staff = models.BooleanField(default=False)
+
+#     USERNAME_FIELD = 'employee_id'
+#     REQUIRED_FIELDS = ['name']
+
+#     objects = EmployeeManager()
+
+#     def clean(self):
+#         # 🔧 validate PIN even if created from admin
+#         if self.password and (not self.password.isdigit() or len(self.password) != 4):
+#             raise ValidationError("Password must be exactly 4 digits.")
+
+#     def __str__(self):
+#         return f"{self.name} ({self.employee_id})"
 
 # ---------- Meal Preference Model ---------- #
 class MealPreference(models.Model):

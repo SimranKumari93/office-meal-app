@@ -141,3 +141,4 @@ AUTH_USER_MODEL = 'meals.Employee'
 
 # Allow cross-origin requests from the frontend dev server
 CORS_ALLOW_ALL_ORIGINS = True
+

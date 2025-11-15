@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 import Login from "./components/Login";
 import Home from "./pages/Home";
-import AdminDashboard from "./pages/AdminDashboard";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import ForgotPin from "./pages/ForgotPin";
 import ChangePin from "./pages/ChangePin";
@@ -84,7 +84,7 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <Navbar
+      <Header
         user={user}
         onRoute={(r) => setRoute(r)}
         onLogout={logout}
@@ -97,7 +97,7 @@ export default function App() {
   {route === ROUTES.FORGOT && <ForgotPin onBack={() => setRoute(ROUTES.LOGIN)} />}
   {route === ROUTES.CHANGE_PIN && <ChangePin onBack={() => setRoute(ROUTES.HOME)} />}
         {route === ROUTES.HOME && user && <Home user={user} />}
-        {route === ROUTES.ADMIN && user && <AdminDashboard user={user} />}
+        {route === ROUTES.ADMIN && user && <Dashboard user={user} />}
         {![ROUTES.LOGIN, ROUTES.HOME, ROUTES.ADMIN, ROUTES.FORGOT, ROUTES.CHANGE_PIN].includes(route) && <NotFound />}
       </main>
     </div>
