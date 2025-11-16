@@ -1,0 +1,19 @@
+from meals.models import Employee
+from django.contrib.auth import authenticate
+
+# Check existing users
+users = Employee.objects.all()
+print(f"Total users: {users.count()}")
+
+# Delete test user if exists
+Employee.objects.filter(employee_id='TEST001').delete()
+
+# Create test user
+user = Employee.objects.create_user(employee_id='TEST001', name='Test User', password='1234')
+
+# Test password
+print(f"Password check: {user.check_password('1234')}")
+
+# Test authentication
+auth_user = authenticate(username='TEST001', password='1234')
+print(f"Auth result: {auth_user}")

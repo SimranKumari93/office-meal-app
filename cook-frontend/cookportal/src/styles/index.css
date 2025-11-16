@@ -1,0 +1,78 @@
+:root{
+  --bg: #f5f6fb; --card: #ffffff; --muted: #6b7280; --text: #111827;
+  --accent: #16a34a; /* green accents similar to cook portal */ --accent-2: #10b981;
+  --pill-bg: #f1f5f9; --radius-sm:8px; --radius-md:12px; --radius-lg:18px;
+  --shadow-1: 0 6px 18px rgba(16,24,40,0.06);
+}
+:root[data-theme="dark"]{
+  --bg:#f6f7fa; /* keep light background for cook portal UI mimic */ 
+  --card:#ffffff;
+  --muted:#6b7280; --text:#0b1220;
+  --accent:#16a34a; --accent-2:#059669;
+  --pill-bg:#f8faf9; --shadow-1: 0 6px 18px rgba(2,6,23,0.04);
+}
+
+/* base */
+*{box-sizing:border-box}
+html,body,#root{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* layout */
+.app-layout{min-height:100vh;display:flex;flex-direction:column}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:transparent;position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(0,0,0,0.03)}
+.menu-burger{width:40px;height:36px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);display:flex;flex-direction:column;justify-content:center;gap:4px;padding:6px;background:transparent;cursor:pointer}
+.menu-burger span{display:block;height:2px;background:var(--text);border-radius:2px;width:18px}
+.logo{width:44px;height:44px;border-radius:4px;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700}
+.nav-avatar img{border-radius:50%}
+
+/* main + sidebar */
+.layout-main{display:flex;gap:18px;padding:20px;max-width:1100px;margin:0 auto;width:100%}
+
+/* sidebar */
+.sidebar{width:260px;background:transparent;border-right:1px solid rgba(0,0,0,0.04);height:calc(100vh - 72px);position:sticky;top:56px;overflow:auto}
+.sidebar .sidebar-item{display:block;width:100%;text-align:left;padding:14px 18px;border:none;background:transparent;cursor:pointer;border-left:4px solid transparent;border-radius:4px}
+.sidebar .sidebar-item:hover{background:#f0fbf5}
+.sidebar .sidebar-item.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+.sidebar .sidebar-item.active:hover{opacity:0.95}
+
+/* overlay + mobile open */
+.sidebar-overlay{display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.35);z-index:30;opacity:0;pointer-events:none;transition:opacity .18s}
+.sidebar.open{position:fixed;left:0;top:0;bottom:0;z-index:40;width:300px;transform:translateX(0)}
+.sidebar-overlay.visible{display:block;opacity:1;pointer-events:auto}
+
+/* page + cards */
+.page{flex:1}
+.card{background:var(--card);border-radius:12px;padding:18px;box-shadow:var(--shadow-1)}
+.stat-card{background:linear-gradient(180deg,#ffffff,#f8faf8);padding:14px;border-radius:10px;box-shadow:var(--shadow-1)}
+
+/* table */
+.menu-table{width:100%;border-collapse:collapse;margin-top:12px}
+.menu-table th, .menu-table td{padding:12px 10px;border-bottom:1px solid rgba(0,0,0,0.04);text-align:left}
+.menu-table thead th{background:transparent;color:var(--muted);font-weight:700}
+
+/* small UI */
+.btn{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+.btn.small{padding:8px 10px}
+.small-btn{padding:6px 8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:transparent;cursor:pointer}
+
+/* meal boxes */
+.meal-box{background:transparent;border-radius:10px;padding:12px;box-shadow:none}
+.centered{text-align:center}
+
+/* slot pill */
+.slot-pill{display:inline-block;padding:6px 8px;border-radius:8px;font-weight:700;color:#fff}
+.slot-pill.breakfast{background:#f97316}
+.slot-pill.lunch{background:#10b981}
+.slot-pill.dinner{background:#ef4444}
+
+/* responsive */
+@media (max-width:900px){
+  .layout-main{flex-direction:column;padding:12px}
+  .sidebar{display:none;position:fixed;left:0;top:0;bottom:0;transform:translateX(-110%);transition:transform .18s}
+  .sidebar.open{display:block;transform:translateX(0)}
+  .sidebar-overlay{display:block}
+  .layout-main > .page{width:100%}
+}
+
+/* visual detail */
+.page h2{margin-top:0}
