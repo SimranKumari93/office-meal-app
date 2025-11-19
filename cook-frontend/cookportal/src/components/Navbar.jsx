@@ -1,16 +1,12 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
-export default function Navbar({ onToggleSidebar }) {
+export default function Navbar() {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
     <header className="navbar">
       <div style={{display:"flex",alignItems:"center",gap:12}}>
-        <button className="menu-burger" onClick={onToggleSidebar} aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
-
         <div className="brand" style={{display:"flex",alignItems:"center",gap:12}}>
           <div className="logo">CP</div>
           <div>
@@ -25,6 +21,7 @@ export default function Navbar({ onToggleSidebar }) {
           className="theme-btn"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           title="Toggle theme"
+          style={{padding:8,borderRadius:8,background:"transparent",border:"1px solid rgba(0,0,0,0.06)",cursor:"pointer"}}
         >
           {theme === "dark" ? "☀️" : "🌙"}
         </button>
