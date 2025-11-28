@@ -1,82 +1,130 @@
 import React, { useEffect, useState } from "react";
+import AddDishModal from "../components/AddDishModal";
 
-/*
-  Menu items persisted to localStorage under key: cp_menu
-  Each item: { id, name, slot, servings, calories, description, prepared }
-*/
 export default function MenuManagement() {
   const [menu, setMenu] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [editingDish, setEditingDish] = useState(null);
+
+  // Load menu
   useEffect(() => {
-    setMenu(JSON.parse(localStorage.getItem("cp_menu") || "[]"));
+    const stored = JSON.parse(localStorage.getItem("cp_menu") || "[]");
+    setMenu(stored);
   }, []);
 
-  const persist = (next) => {
+  // Persist
+  const saveMenu = (next) => {
     setMenu(next);
     localStorage.setItem("cp_menu", JSON.stringify(next));
   };
 
-  const addDish = () => {
-    const name = prompt("Dish name");
-    if (!name) return;
-    const slot = prompt("Slot (breakfast/lunch/dinner)").toLowerCase();
-    const servings = parseInt(prompt("Servings available (number)"), 10) || 0;
-    const calories = prompt("Calories (e.g. 450 Cal)") || "0";
-    const description = prompt("Description") || "";
-
-    const newDish = {
-      id: Date.now(),
-      name, slot, servings, calories, description,
-      prepared: servings
-    };
-    persist([...menu, newDish]);
+  // Add
+  const handleAddDish = (dish) => {
+    const updated = [...menu, { ...dish, id: Date.now() }];
+    saveMenu(updated);
+    setOpenModal(false);
   };
 
-  const edit = (id) => {
-    const item = menu.find(m=>m.id===id);
-    if(!item) return;
-    const name = prompt("Dish name", item.name) || item.name;
-    const slot = prompt("Slot", item.slot) || item.slot;
-    const servings = parseInt(prompt("Servings", item.servings),10) || item.servings;
-    const calories = prompt("Calories", item.calories) || item.calories;
-    const description = prompt("Description", item.description) || item.description;
-    const updated = menu.map(m => m.id===id ? {...m, name, slot, servings, calories, description, prepared:servings} : m);
-    persist(updated);
+  // Edit
+  const handleEdit = (dish) => {
+    setEditingDish(dish);
+    setOpenModal(true);
   };
 
-  const remove = (id) => {
-    if(!window.confirm("Delete dish?")) return;
-    persist(menu.filter(m=>m.id!==id));
+  const handleUpdateDish = (updatedDish) => {
+    const updatedMenu = menu.map((d) =>
+      d.id === updatedDish.id ? updatedDish : d
+    );
+    saveMenu(updatedMenu);
+    setEditingDish(null);
+    setOpenModal(false);
+  };
+
+  // Delete
+  const handleDelete = (id) => {
+    if (!window.confirm("Delete this dish?")) return;
+    saveMenu(menu.filter((d) => d.id !== id));
   };
 
   return (
     <div className="page">
       <div className="card">
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-          <h2 style={{margin:0}}>Menu Management</h2>
-          <button className="btn" onClick={addDish}>+ Add New Dish</button>
+        {/* header */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2 style={{ margin: 0 }}>Menu Management</h2>
+
+          <button
+            className="add-btn"
+            onClick={() => {
+              setEditingDish(null);
+              setOpenModal(true);
+            }}
+          >
+            + Add New Dish
+          </button>
         </div>
 
-        <div style={{marginTop:14}}>
+        {/* table */}
+        <div style={{ marginTop: 18 }}>
           {menu.length === 0 ? (
-            <div className="card">No dishes yet. Add a dish to populate employee menu.</div>
+            <div className="empty-card">No dishes added yet.</div>
           ) : (
             <table className="menu-table">
               <thead>
                 <tr>
-                  <th>Name</th><th>Slot</th><th>Servings</th><th>Calories</th><th>Description</th><th>Actions</th>
+                  <th>Name</th>
+                  <th>Slot</th>
+                  <th>Servings</th>
+                  <th>Calories</th>
+                  <th>Description</th>
+                  <th style={{ textAlign: "center" }}>Actions</th>
                 </tr>
               </thead>
+
               <tbody>
-                {menu.map(row=>(
-                  <tr key={row.id}>
-                    <td>{row.name}</td>
-                    <td><span className={`slot-pill ${row.slot}`}>{row.slot}</span></td>
-                    <td>{row.servings}</td>
-                    <td>{row.calories}</td>
-                    <td>{row.description}</td>
+                {menu.map((dish) => (
+                  <tr key={dish.id}>
+                    <td>{dish.name}</td>
                     <td>
-                      <button className="small-btn" onClick={()=>edit(row.id)}>Edit</button>
-                      <button className="small-btn" onClick={()=>remove(row.id)} style={{marginLeft:8}}>Delete</button>
+                      <span className={`slot-pill ${dish.slot}`}>
+                        {dish.slot}
+                      </span>
+                    </td>
+                    <td>{dish.servings}</td>
+                    <td>{dish.calories}</td>
+                    <td>{dish.description}</td>
+
+                    <td style={{ textAlign: "center" }}>
+                      {/* EDIT ICON */}
+                      <span
+                        style={{
+                          cursor: "pointer",
+                          marginRight: "14px",
+                          display: "inline-flex",
+                          alignItems: "center",
+                        }}
+                        onClick={() => handleEdit(dish)}
+                      >
+                        <i
+                          className="fas fa-edit"
+                          style={{ fontSize: "18px", color: "#4b4f58" }}
+                        ></i>
+                      </span>
+
+                      {/* DELETE ICON */}
+                      <span
+                        style={{
+                          cursor: "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                        }}
+                        onClick={() => handleDelete(dish.id)}
+                      >
+                        <i
+                          className="fas fa-trash"
+                          style={{ fontSize: "18px", color: "#4b4f58" }}
+                        ></i>
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -85,6 +133,18 @@ export default function MenuManagement() {
           )}
         </div>
       </div>
+
+      {/* modal */}
+      <AddDishModal
+        open={openModal}
+        onClose={() => {
+          setOpenModal(false);
+          setEditingDish(null);
+        }}
+        onCreate={handleAddDish}
+        onUpdate={handleUpdateDish}
+        editingDish={editingDish}
+      />
     </div>
   );
 }

@@ -94,6 +94,15 @@ body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 .slot-pill.lunch{background:var(--accent)}
 .slot-pill.dinner{background:#ef4444}
 
+.menu-table td span i {
+  transition: 0.15s ease-in-out;
+}
+
+.menu-table td span i:hover {
+  color: #6d71ff;
+  transform: scale(1.1);
+}
+
 /* responsiveness */
 @media (max-width:900px){
   .layout-main{flex-direction:column;padding:12px}
@@ -104,3 +113,4 @@ body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 
 /* accessibility */
 .sidebar .sidebar-item:focus{outline:2px solid rgba(109,113,255,0.12);border-radius:6px}
+
