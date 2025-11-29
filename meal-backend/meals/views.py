@@ -297,25 +297,25 @@ class DailyMenuViewSet(viewsets.ModelViewSet):
 
 
 # ---------- Auth (login/signup) ---------- #
-@api_view(['POST'])
-@permission_classes([permissions.AllowAny])
-def login_view(request):
-    employee_id = request.data.get('employee_id')
-    password = request.data.get('password')
+# @api_view(['POST'])
+# @permission_classes([permissions.AllowAny])
+# def login_view(request):
+#     employee_id = request.data.get('employee_id')
+#     password = request.data.get('password')
 
-    if not employee_id or not password:
-        return Response({"error": "Employee ID and password are required."}, status=status.HTTP_400_BAD_REQUEST)
+#     if not employee_id or not password:
+#         return Response({"error": "Employee ID and password are required."}, status=status.HTTP_400_BAD_REQUEST)
 
-    # authenticate expects username kw for custom USERNAME_FIELD
-    user = authenticate(request, username=employee_id, password=password)
+#     # authenticate expects username kw for custom USERNAME_FIELD
+#     user = authenticate(request, username=employee_id, password=password)
 
-    if user is not None:
-        # create or retrieve token
-        token, _ = Token.objects.get_or_create(user=user)
-        serializer = EmployeeSerializer(user)
-        return Response({"message": "Login successful", "user": serializer.data, "token": token.key}, status=status.HTTP_200_OK)
-    else:
-        return Response({"error": "Invalid Employee ID or password."}, status=status.HTTP_401_UNAUTHORIZED)
+#     if user is not None:
+#         # create or retrieve token
+#         token, _ = Token.objects.get_or_create(user=user)
+#         serializer = EmployeeSerializer(user)
+#         return Response({"message": "Login successful", "user": serializer.data, "token": token.key}, status=status.HTTP_200_OK)
+#     else:
+#         return Response({"error": "Invalid Employee ID or password."}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 # ---------- Daily summary for admin/kitchen ---------- #

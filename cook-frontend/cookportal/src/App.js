@@ -7,6 +7,12 @@ import EmployeeMeals from "./pages/EmployeeMeals";
 import GuestTracker from "./pages/GuestTracker";
 import SupplyReports from "./pages/SupplyReports";
 import "./styles/index.css";
+// import Login from "./components/Login";
+// import Home from "./pages/Home";
+// import NotFound from "./pages/NotFound";
+// import ForgotPin from "./pages/ForgotPin";
+// import ChangePin from "./pages/ChangePin";
+
 
 export default function App() {
   const [route, setRoute] = useState("dashboard");
