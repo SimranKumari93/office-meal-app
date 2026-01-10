@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* ---------- LOGIN / SIGNUP ---------- */
+.auth-card{border-radius:28px;padding:28px 22px}
+.auth-title{font-size:26px;font-weight:700;margin:4px 0 18px}
+.input{width:100%;padding:12px;border-radius:10px;border:1px solid #e6e9ef;background:transparent;margin-bottom:12px;font-size:15px}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 6px 18px rgba(43,110,246,0.12)}
+.btn{display:block;width:100%;background:var(--accent);color:#fff;border:none;padding:12px;border-radius:12px;font-weight:600;font-size:16px;cursor:pointer}
+.switch-text{text-align:center;margin-top:14px;color:var(--muted)}
+.switch-text span{color:var(--accent);cursor:pointer;font-weight:600}

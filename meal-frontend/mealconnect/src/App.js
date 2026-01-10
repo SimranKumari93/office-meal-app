@@ -51,29 +51,57 @@ export default function App() {
       });
   }, []);
 
-  const onLogin = (userObj) => {
-    // userObj expected to contain { employeeId, pin, name } from Login form
-    // call backend login endpoint to authenticate and retrieve token + user
-    const payload = {
-      employee_id: userObj.employeeId || userObj.employee_id || userObj.employee,
-      password: userObj.pin || userObj.password,
-    };
+  // const onLogin = (userObj) => {
+  //   // userObj expected to contain { employeeId, pin, name } from Login form
+  //   // call backend login endpoint to authenticate and retrieve token + user
+  //   const payload = {
+  //     employee_id: userObj.employeeId || userObj.employee_id || userObj.employee,
+  //     password: userObj.pin || userObj.password,
+  //   };
 
-    axios.post("http://127.0.0.1:8000/login/", payload).then((res) => {
-      console.log('LOGIN RESPONSE', res);
-      if (res.data && res.data.token) {
-        const token = res.data.token;
-        localStorage.setItem("token", token);
-        axios.defaults.headers.common["Authorization"] = `Token ${token}`;
-        setUser(res.data.user);
-        setRoute(res.data.user?.role === "admin" ? ROUTES.ADMIN : ROUTES.HOME);
-      } else {
-        alert("Login failed: invalid response from server.");
-      }
-    }).catch((err) => {
-      alert(err?.response?.data?.error || "Login failed");
-    });
+  //   axios.post("http://127.0.0.1:8000/login/", payload).then((res) => {
+  //     console.log('LOGIN RESPONSE', res);
+  //     if (res.data && res.data.token) {
+  //       const token = res.data.token;
+  //       localStorage.setItem("token", token);
+  //       axios.defaults.headers.common["Authorization"] = `Token ${token}`;
+  //       setUser(res.data.user);
+  //       setRoute(res.data.user?.role === "admin" ? ROUTES.ADMIN : ROUTES.HOME);
+  //     } else {
+  //       alert("Login failed: invalid response from server.");
+  //     }
+  //   }).catch((err) => {
+  //     alert(err?.response?.data?.error || "Login failed");
+  //   });
+  // };
+
+  /** Neew Code onLOgin  */
+
+  const onLogin = (userObj) => {
+  const payload = {
+    employee_id: userObj.employeeId || userObj.employee_id || userObj.employee,
+    password: userObj.pin || userObj.password,
   };
+
+  console.log('SENDING TO BACKEND:', payload);  // Add this line
+
+  axios.post("http://127.0.0.1:8000/login/", payload).then((res) => {
+    console.log('LOGIN RESPONSE', res);
+    if (res.data && res.data.token) {
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = `Token ${token}`;
+      setUser(res.data.user);
+      setRoute(res.data.user?.role === "admin" ? ROUTES.ADMIN : ROUTES.HOME);
+    } else {
+      alert("Login failed: invalid response from server.");
+    }
+  }).catch((err) => {
+    console.log('LOGIN ERROR:', err.response?.data);  // Add this line
+    alert(err?.response?.data?.error || "Login failed");
+  });
+};
+
 
   const logout = () => {
     setUser(null);

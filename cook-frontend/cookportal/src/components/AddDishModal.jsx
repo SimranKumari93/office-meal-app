@@ -67,28 +67,38 @@ export default function AddDishModal({ open, initialData = null, onClose, onCrea
 
         <form onSubmit={handleSubmit}>
 
+          <div className="modal-field">
           <label style={{display:"block",fontWeight:600,marginBottom:6}}>Dish Name</label>
-          <input className="input" value={name} onChange={e=>setName(e.target.value)} placeholder="e.g. Chicken Curry" />
+          <input className="modal-input" value={name} onChange={e=>setName(e.target.value)} placeholder="e.g. Chicken Curry" />
+          </div>
 
+           <div className="modal-field">
           <label style={{display:"block",fontWeight:600,marginTop:10,marginBottom:6}}>Meal Slot</label>
-          <select className="input" value={slot} onChange={e=>setSlot(e.target.value)}>
+          <select className="modal-input" value={slot} onChange={e=>setSlot(e.target.value)}>
             <option>Breakfast</option>
             <option>Lunch</option>
             <option>Dinner</option>
           </select>
+          </div>
 
+          <div className="modal-field">
           <label style={{display:"block",fontWeight:600,marginTop:10,marginBottom:6}}>Estimated Servings</label>
-          <input className="input" type="number" min="0" value={servings} onChange={e=>setServings(e.target.value)} />
+          <input className="modal-input" type="number" min="0" value={servings} onChange={e=>setServings(e.target.value)} />
+          </div>
 
+          <div className="modal-field">
           <label style={{display:"block",fontWeight:600,marginTop:10,marginBottom:6}}>Estimated Calories (per serving)</label>
-          <input className="input" type="number" min="0" value={calories} onChange={e=>setCalories(e.target.value)} />
+          <input className="modal-input" type="number" min="0" value={calories} onChange={e=>setCalories(e.target.value)} />
+          </div>
 
+          <div className="modal-field">
           <label style={{display:"block",fontWeight:600,marginTop:10,marginBottom:6}}>Description</label>
-          <textarea className="input" rows="3" value={description} onChange={e=>setDescription(e.target.value)} />
+          <textarea className="modal-input" rows="3" value={description} onChange={e=>setDescription(e.target.value)} />
+          </div>
 
           <div style={{display:"flex",justifyContent:"flex-end",gap:12,marginTop:14}}>
-            <button type="button" className="cancel-btn" onClick={onClose}>Cancel</button>
-            <button type="submit" className="create-btn">{initialData ? "Save" : "Create Dish"}</button>
+            <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
+              <button type="submit" className="btn-primary">{initialData ? "Save" : "Create Dish"}</button>
           </div>
         </form>
       </div>

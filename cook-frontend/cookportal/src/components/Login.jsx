@@ -16,23 +16,10 @@ export default function Login({ onLogin, onRoute }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   onLogin(formData);
-  // };
-
   const handleSubmit = (e) => {
-  e.preventDefault();
-  
-  // Transform the data to match backend expectations
-  const loginData = {
-    employee_id: formData.employeeId,  // Convert to snake_case
-    password: formData.pin,             // Rename pin to password
-    ...(isSignup && { name: formData.name })  // Include name only for signup
+    e.preventDefault();
+    onLogin(formData);
   };
-  
-  onLogin(loginData);
-};
 
   return (
     <div className="login-container">
