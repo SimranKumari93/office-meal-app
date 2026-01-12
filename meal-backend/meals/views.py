@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from django.utils import timezone
+from rest_framework.views import APIView
 import datetime
 from django.db import models
 
@@ -294,7 +295,35 @@ class DailyMenuViewSet(viewsets.ModelViewSet):
             except DailyMenu.DoesNotExist:
                 return Response(None)
         return super().list(request, *args, **kwargs)
+    
+class EmployeeMenuByDate(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request):
+        date_str = request.query_params.get('date')
+        if not date_str:
+            return Response(
+                {"error": "date is required in YYYY-MM-DD format"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            date = datetime.date.fromisoformat(date_str)
+        except ValueError:
+            return Response(
+                {"error": "Invalid date format. Use YYYY-MM-DD"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        menus = DailyMenu.objects.filter(date=date).prefetch_related('dishes')
+
+        if not menus.exists():
+            return Response([], status=status.HTTP_200_OK)
+
+        serializer = DailyMenuSerializer(menus, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
 
 # ---------- Auth (login/signup) ---------- #
 # @api_view(['POST'])

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Employee, MealPreference, GuestEntry, Attendance, Menu, DailyMenu
+from .models import Employee, MealPreference, GuestEntry, Attendance, Menu, DailyMenu, Dish
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,7 +41,19 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
 # Menu serializer defined earlier; ensure import order
 
+# class DailyMenuSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = DailyMenu
+#         fields = ['id','date','menu_items','available_preferences','created_at','updated_at']
+
+class DishSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dish
+        fields = ['id', 'name', 'category']
+
 class DailyMenuSerializer(serializers.ModelSerializer):
+    dishes = DishSerializer(many=True)
+
     class Meta:
         model = DailyMenu
-        fields = ['id','date','menu_items','available_preferences','created_at','updated_at']
+        fields = ['meal_slot', 'dishes']

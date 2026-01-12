@@ -33,6 +33,8 @@ from meals.views import (
 )
 from meals.views import MenuViewSet
 from meals.views import DailyMenuViewSet
+from meals.views import EmployeeMenuByDate
+
 
 router = DefaultRouter()
 router.register(r'employees', EmployeeViewSet)
@@ -41,6 +43,7 @@ router.register(r'guest-entries', GuestEntryViewSet)
 router.register(r'attendances', AttendanceViewSet)
 router.register(r'menu', MenuViewSet)
 router.register(r'daily-menu', DailyMenuViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -52,5 +55,6 @@ urlpatterns = [
     path('api/change-pin/', change_pin_view, name='change_pin'),
     path('login/', login_view, name='login_view'),
     path('signup/', signup_view, name='signup_view'),
+    path('employee/menu/', EmployeeMenuByDate.as_view()),
 ]
 
